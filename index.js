@@ -1,16 +1,23 @@
 const express = require("express");
 const app = express();
 const PORT = 8000;
+const path = require("path");
 const { connectToMongoDb } = require("./connection");
 const urlHandler = require("./routes/url");
+const staticRoute = require("./routes/staticRouters");
 const Url = require("./model/url");
 
 connectToMongoDb("mongodb://0.0.0.0:27017/url-shortner").then(() => {
   console.log("Connected to MongoDB");
 });
+app.set("view engine", "ejs");
+app.set("views", path.resolve("./views"))
 
 app.use(express.json());
+app.use(express.urlencoded({extended: false}));
 app.use("/url", urlHandler);
+app.use("/all", staticRoute);
+
 
 // Go to the URL from the ID
 
