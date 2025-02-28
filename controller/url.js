@@ -11,7 +11,11 @@ async function handleGenerateNewUrl(req, res) {
     redirectUrl: body.url,
     visitHistory: [],
   });
-  return res.json({ id: shortID });
+  return res.render("home", {
+    id: shortID,
+    orginalUrl: body.url,
+  });
+  // return res.json({ id: shortID });
 }
 
 async function handleDeleteUrl(req, res) {
